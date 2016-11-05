@@ -107,7 +107,9 @@ sub collector {
   sub renderExp {
     my ($self) = @_;
     my $seen = $self->_slotref;
-    return "anything other than: @$seen[ 0 .. $#$seen - 1 ]";
+    return( "anything other than: "
+          . join q{ or }, map {; Test::Deep::render_val($_) }
+                          @$seen[ 0 .. $#$seen - 1 ]);
   }
 }
 
@@ -140,7 +142,7 @@ sub collector {
 
   sub renderExp {
     my ($self) = @_;
-    return $self->_slotref->[0];
+    return Test::Deep::render_val($self->_slotref->[0]);
   }
 }
 
