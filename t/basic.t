@@ -33,7 +33,7 @@ subtest "same are not unique" => sub {
       diag => <<'END_DIAG'
 $data->[1] repeats previously seen value for thinger
    got : 'badger'
-expect : anything other than: badger
+expect : anything other than: 'badger'
 END_DIAG
     },
     "same are not unique"
@@ -68,7 +68,7 @@ subtest "unique are not same" => sub {
       diag => <<'END_DIAG'
 $data->[1] differs from initial value for thinger
    got : 'mushroom'
-expect : badger
+expect : 'badger'
 END_DIAG
     },
     "same are not unique"
