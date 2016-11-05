@@ -80,4 +80,37 @@ END_DIAG
   is_deeply([ $col->unique_values('thinger') ], [@uniq[0,1]], "values uniqued");
 };
 
+subtest "chaining and saving" => sub {
+  my $col = collector;
+  my $have = {
+    username => 'rrenfield',
+    manager  => 'vtepes',
+  };
+
+  check_test(
+    sub {
+      cmp_deeply(
+        $have,
+        {
+          username => $col->unique('ids')->save('username'),
+          manager  => $col->unique('ids')->save('manager'),
+        },
+      );
+    },
+    {
+      ok => 1,
+    },
+    "assert uniqueness and save data"
+  );
+
+  cmp_deeply(
+    [ $col->values('ids') ],
+    bag(qw( rrenfield vtepes )),
+    "all ids saved",
+  );
+
+  is($col->single_value("username"), 'rrenfield', "saved username");
+  is($col->single_value("manager"),  'vtepes',    "saved manager");
+};
+
 done_testing;
