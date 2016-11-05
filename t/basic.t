@@ -80,6 +80,29 @@ END_DIAG
   is_deeply([ $col->unique_values('thinger') ], [@uniq[0,1]], "values uniqued");
 };
 
+subtest "undef is allowed and unique from ''" => sub {
+  my @input = ('abc', '', 'def', undef, 'ghi');
+
+  my $col = collector;
+  check_test(
+    sub {
+      cmp_deeply(
+        \@input,
+        array_each( $col->uniq("thinger") )
+      );
+    },
+    {
+      ok => 1,
+    },
+    "same are not unique"
+  );
+
+  # array_each stops running after its first failure, so we won't see every
+  # same value, only up to the first repeat. -- rjbs, 2016-11-04
+  is_deeply([ $col->values('thinger') ], \@input, "values collected");
+  is_deeply([ $col->unique_values('thinger') ], \@input, "values uniqued");
+};
+
 subtest "chaining and saving" => sub {
   my $col = collector;
   my $have = {
