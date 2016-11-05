@@ -23,7 +23,7 @@ sub collector {
   sub unique { Test::Deep::Collect::UniqueCmp->new(@_[0,1]) }
   sub uniq   { Test::Deep::Collect::UniqueCmp->new(@_[0,1]) }
   sub same   { Test::Deep::Collect::SameCmp->new(@_[0,1])   }
-  sub slot   { Test::Deep::Collect::SlotCmp->new(@_[0,1])   }
+  sub save   { Test::Deep::Collect::SaveCmp->new(@_[0,1])   }
 
   sub single_value {
     my ($self, $slot) = @_;
@@ -62,7 +62,7 @@ sub collector {
     return $_[0]{collector}{slots}{ $_[0]{slot} } ||= [];
   }
 
-  for my $method (qw(unique uniq slot same)) {
+  for my $method (qw(unique uniq save same)) {
     my $sub = sub {
       my $self = shift;
       my $cmp = $self->{collector}->$method(@_);
@@ -140,7 +140,7 @@ sub collector {
 }
 
 {
-  package Test::Deep::Collect::SlotCmp;
+  package Test::Deep::Collect::SaveCmp;
   our @ISA = qw(Test::Deep::Collect::_Cmp);
 
   sub descend {
