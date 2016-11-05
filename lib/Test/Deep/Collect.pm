@@ -16,6 +16,7 @@ sub collector {
 
 {
   package Test::Deep::Collect::Collector;
+
   sub new {
     bless { slots => {} } => $_[0]
   }
@@ -52,6 +53,7 @@ sub collector {
 
 {
   package Test::Deep::Collect::_Cmp;
+
   use Test::Deep::Cmp; # remember: its ->import sets our @ISA
 
   sub init {
@@ -77,6 +79,7 @@ sub collector {
 
 {
   package Test::Deep::Collect::UniqueCmp;
+
   our @ISA = qw(Test::Deep::Collect::_Cmp);
 
   sub descend {
@@ -110,6 +113,7 @@ sub collector {
 
 {
   package Test::Deep::Collect::SameCmp;
+
   our @ISA = qw(Test::Deep::Collect::_Cmp);
 
   sub descend {
@@ -142,6 +146,7 @@ sub collector {
 
 {
   package Test::Deep::Collect::SaveCmp;
+
   our @ISA = qw(Test::Deep::Collect::_Cmp);
 
   sub descend {
