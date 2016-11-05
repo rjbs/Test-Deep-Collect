@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 package Test::Deep::Collect;
+# ABSTRACT: collect data while testing it
 
 use List::Util ();
 
